@@ -15,6 +15,12 @@ import FraudSmsPage from "./pages/FraudSmsPage";
 import UpiScamPage from "./pages/UpiScamPage";
 import LinkDetectorPage from "./pages/LinkDetectorPage";
 import ScamLookupPage from "./pages/ScamLookupPage";
+import ProfileSettingsPage from "./pages/ProfileSettingsPage";
+import NotificationSettingsPage from "./pages/NotificationSettingsPage";
+import EmergencyContactPage from "./pages/EmergencyContactPage";
+import AboutPage from "./pages/AboutPage";
+import SupportPage from "./pages/SupportPage";
+import TermsPage from "./pages/TermsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +44,12 @@ const App = () => (
             <Route path="/upi-scam" element={<UpiScamPage />} />
             <Route path="/link-detector" element={<LinkDetectorPage />} />
             <Route path="/scam-lookup" element={<ScamLookupPage />} />
+            <Route path="/profile-settings" element={<ProfileSettingsPage />} />
+            <Route path="/notification-settings" element={<NotificationSettingsPage />} />
+            <Route path="/emergency-contact" element={<EmergencyContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/support" element={<SupportPage />} />
+            <Route path="/terms" element={<TermsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

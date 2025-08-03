@@ -16,9 +16,11 @@ import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const SettingsPage = () => {
+  const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(() => 
     localStorage.getItem('theme') === 'dark'
   );
@@ -107,6 +109,15 @@ const SettingsPage = () => {
           </div>
         </div>
 
+        {/* Profile Settings Button */}
+        <Card className="bg-gradient-card border-border shadow-card">
+          <SettingItem
+            icon={<User className="h-5 w-5" />}
+            title="Profile Settings"
+            onClick={() => navigate("/profile-settings")}
+          />
+        </Card>
+
         {/* General Section */}
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-foreground">General</h3>
@@ -126,13 +137,13 @@ const SettingsPage = () => {
             <SettingItem
               icon={<Bell className="h-5 w-5" />}
               title="Notification Settings"
-              onClick={() => toast.info("Notification settings coming soon")}
+              onClick={() => navigate("/notification-settings")}
             />
             <Separator className="mx-4" />
             <SettingItem
               icon={<User className="h-5 w-5" />}
               title="Emergency Contact Setup"
-              onClick={() => toast.info("Emergency contact setup coming soon")}
+              onClick={() => navigate("/emergency-contact")}
             />
             <Separator className="mx-4" />
             <SettingItem
@@ -151,19 +162,19 @@ const SettingsPage = () => {
             <SettingItem
               icon={<Info className="h-5 w-5" />}
               title="About Us"
-              onClick={() => toast.info("About page coming soon")}
+              onClick={() => navigate("/about")}
             />
             <Separator className="mx-4" />
             <SettingItem
               icon={<HelpCircle className="h-5 w-5" />}
               title="Support"
-              onClick={() => toast.info("Support coming soon")}
+              onClick={() => navigate("/support")}
             />
             <Separator className="mx-4" />
             <SettingItem
               icon={<Info className="h-5 w-5" />}
               title="Terms"
-              onClick={() => toast.info("Terms coming soon")}
+              onClick={() => navigate("/terms")}
             />
           </Card>
         </div>
