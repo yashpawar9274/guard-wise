@@ -21,6 +21,9 @@ import EmergencyContactPage from "./pages/EmergencyContactPage";
 import AboutPage from "./pages/AboutPage";
 import SupportPage from "./pages/SupportPage";
 import TermsPage from "./pages/TermsPage";
+import DocumentVaultPage from "./pages/DocumentVaultPage";
+import ProtectionScorePage from "./pages/ProtectionScorePage";
+import ScamNewsPage from "./pages/ScamNewsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +53,9 @@ const App = () => (
             <Route path="/about" element={<AboutPage />} />
             <Route path="/support" element={<SupportPage />} />
             <Route path="/terms" element={<TermsPage />} />
+            <Route path="/document-vault" element={<DocumentVaultPage />} />
+            <Route path="/protection-score" element={<ProtectionScorePage />} />
+            <Route path="/scam-news" element={<ScamNewsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -110,6 +110,31 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Additional Features */}
+      <div>
+        <h2 className="text-lg font-semibold mb-4 text-foreground">Additional Features</h2>
+        <div className="grid grid-cols-1 gap-3">
+          <QuickTile
+            title="Document Vault"
+            icon="🗃️"
+            onClick={() => navigate("/document-vault")}
+            className="animate-scale-in"
+          />
+          <QuickTile
+            title="Protection Score"
+            icon="🛡️"
+            onClick={() => navigate("/protection-score")}
+            className="animate-scale-in"
+          />
+          <QuickTile
+            title="Scam News & Alerts"
+            icon="📰"
+            onClick={() => navigate("/scam-news")}
+            className="animate-scale-in"
+          />
+        </div>
+      </div>
+
       {/* Demo Features */}
       <div>
         <h2 className="text-lg font-semibold mb-4 text-foreground">Demo Features</h2>
