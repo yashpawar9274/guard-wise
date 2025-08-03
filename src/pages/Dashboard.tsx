@@ -14,8 +14,20 @@ const Dashboard = () => {
 
   const handleQuickAction = (action: string) => {
     switch (action) {
+      case "scam-calls":
+        navigate("/scam-calls");
+        break;
+      case "fraud-sms":
+        navigate("/fraud-sms");
+        break;
+      case "upi-frauds":
+        navigate("/upi-scam");
+        break;
+      case "link-detector":
+        navigate("/link-detector");
+        break;
       case "scam-lookup":
-        navigate("/threat-analyzer");
+        navigate("/scam-lookup");
         break;
       case "app-scanner":
         navigate("/app-scanner");

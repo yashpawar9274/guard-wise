@@ -89,120 +89,84 @@ const SettingsPage = () => {
   );
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground mb-1">Settings</h1>
-        <p className="text-muted-foreground">Customize your protection preferences</p>
+      <div className="flex items-center justify-between p-4 border-b border-border">
+        <h1 className="text-xl font-semibold text-foreground">Settings</h1>
       </div>
 
-      {/* Profile Section */}
-      <Card className="bg-gradient-card border-border shadow-card">
-        <SettingItem
-          icon={<User className="h-5 w-5" />}
-          title="Profile Settings"
-          description="Manage your account and personal information"
-          onClick={() => toast.info("Profile settings coming soon")}
-        />
-      </Card>
-
-      {/* Protection Settings */}
-      <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-foreground mb-3">Protection</h2>
-        <Card className="bg-gradient-card border-border shadow-card">
-          <SettingItem
-            icon={<Shield className="h-5 w-5" />}
-            title="Real-time Protection"
-            description="Monitor threats in real-time"
-            action={
-              <Switch 
-                checked={realTimeProtection}
-                onCheckedChange={handleProtectionToggle}
-              />
-            }
-          />
-          <Separator className="mx-4" />
-          <SettingItem
-            icon={<Phone className="h-5 w-5" />}
-            title="Auto Block"
-            description="Automatically block known scam numbers"
-            action={
-              <Switch 
-                checked={autoBlock}
-                onCheckedChange={handleAutoBlockToggle}
-              />
-            }
-          />
-          <Separator className="mx-4" />
-          <SettingItem
-            icon={<RotateCcw className="h-5 w-5" />}
-            title="Reset Protection Score"
-            description="Reset your protection score to start fresh"
-            onClick={resetProtectionScore}
-          />
-        </Card>
-      </div>
-
-      {/* Preferences */}
-      <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-foreground mb-3">Preferences</h2>
-        <Card className="bg-gradient-card border-border shadow-card">
-          <SettingItem
-            icon={darkMode ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-            title="Dark Mode"
-            description="Toggle between light and dark themes"
-            action={
-              <Switch 
-                checked={darkMode}
-                onCheckedChange={toggleDarkMode}
-              />
-            }
-          />
-          <Separator className="mx-4" />
-          <SettingItem
-            icon={<Bell className="h-5 w-5" />}
-            title="Notifications"
-            description="Control push notifications and alerts"
-            action={
-              <Switch 
-                checked={notifications}
-                onCheckedChange={handleNotificationToggle}
-              />
-            }
-          />
-        </Card>
-      </div>
-
-      {/* Support */}
-      <div className="space-y-1">
-        <h2 className="text-lg font-semibold text-foreground mb-3">Support</h2>
-        <Card className="bg-gradient-card border-border shadow-card">
-          <SettingItem
-            icon={<HelpCircle className="h-5 w-5" />}
-            title="Help & Support"
-            description="Get help and contact support"
-            onClick={() => toast.info("Help center coming soon")}
-          />
-          <Separator className="mx-4" />
-          <SettingItem
-            icon={<Info className="h-5 w-5" />}
-            title="About Fraude Guard"
-            description="Version 1.0.0 • Terms & Privacy"
-            onClick={() => toast.info("About page coming soon")}
-          />
-        </Card>
-      </div>
-
-      {/* Footer */}
-      <div className="text-center pt-6 pb-4">
-        <div className="flex items-center justify-center space-x-1 text-sm text-muted-foreground">
-          <span>Made with</span>
-          <Heart className="h-4 w-4 text-red-500" />
-          <span>for your security</span>
+      <div className="p-4 space-y-6">
+        {/* Profile Section */}
+        <div className="text-center space-y-4">
+          <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+            <User className="h-12 w-12 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-foreground">Ethan Carter</h2>
+            <p className="text-primary font-medium">Premium User</p>
+          </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-1">
-          Fraude Guard v1.0.0
-        </p>
+
+        {/* General Section */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-foreground">General</h3>
+          
+          <Card className="bg-gradient-card border-border shadow-card">
+            <SettingItem
+              icon={darkMode ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              title="Dark Mode"
+              action={
+                <Switch 
+                  checked={darkMode}
+                  onCheckedChange={toggleDarkMode}
+                />
+              }
+            />
+            <Separator className="mx-4" />
+            <SettingItem
+              icon={<Bell className="h-5 w-5" />}
+              title="Notification Settings"
+              onClick={() => toast.info("Notification settings coming soon")}
+            />
+            <Separator className="mx-4" />
+            <SettingItem
+              icon={<User className="h-5 w-5" />}
+              title="Emergency Contact Setup"
+              onClick={() => toast.info("Emergency contact setup coming soon")}
+            />
+            <Separator className="mx-4" />
+            <SettingItem
+              icon={<RotateCcw className="h-5 w-5" />}
+              title="Reset Protection Score"
+              onClick={resetProtectionScore}
+            />
+          </Card>
+        </div>
+
+        {/* About Section */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-foreground">About</h3>
+          
+          <Card className="bg-gradient-card border-border shadow-card">
+            <SettingItem
+              icon={<Info className="h-5 w-5" />}
+              title="About Us"
+              onClick={() => toast.info("About page coming soon")}
+            />
+            <Separator className="mx-4" />
+            <SettingItem
+              icon={<HelpCircle className="h-5 w-5" />}
+              title="Support"
+              onClick={() => toast.info("Support coming soon")}
+            />
+            <Separator className="mx-4" />
+            <SettingItem
+              icon={<Info className="h-5 w-5" />}
+              title="Terms"
+              onClick={() => toast.info("Terms coming soon")}
+            />
+          </Card>
+        </div>
       </div>
     </div>
   );

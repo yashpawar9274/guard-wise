@@ -10,6 +10,11 @@ import AppScanner from "./pages/AppScanner";
 import HistoryPage from "./pages/HistoryPage";
 import SettingsPage from "./pages/SettingsPage";
 import IncomingCall from "./pages/IncomingCall";
+import ScamCallsPage from "./pages/ScamCallsPage";
+import FraudSmsPage from "./pages/FraudSmsPage";
+import UpiScamPage from "./pages/UpiScamPage";
+import LinkDetectorPage from "./pages/LinkDetectorPage";
+import ScamLookupPage from "./pages/ScamLookupPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +33,11 @@ const App = () => (
             <Route path="/threat-analyzer" element={<ThreatAnalyzer />} />
             <Route path="/app-scanner" element={<AppScanner />} />
             <Route path="/incoming-call" element={<IncomingCall />} />
+            <Route path="/scam-calls" element={<ScamCallsPage />} />
+            <Route path="/fraud-sms" element={<FraudSmsPage />} />
+            <Route path="/upi-scam" element={<UpiScamPage />} />
+            <Route path="/link-detector" element={<LinkDetectorPage />} />
+            <Route path="/scam-lookup" element={<ScamLookupPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
