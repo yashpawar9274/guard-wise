@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Shield, Search, Bot, Phone, MessageSquare, CreditCard, Link2, SearchCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,11 +6,42 @@ import ProtectionCard from "@/components/ProtectionCard";
 import QuickTile from "@/components/QuickTile";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [scamsBlocked] = useState(3);
-  const [userName] = useState("Yash");
+  const [userName, setUserName] = useState("User");
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (!user) return;
+
+      try {
+        const { data } = await supabase
+          .from('profiles')
+          .select('full_name')
+          .eq('id', user.id)
+          .single();
+
+        if (data?.full_name) {
+          setUserName(data.full_name.split(' ')[0]); // Use first name only
+        } else if (user.email) {
+          // Fallback to email name part
+          setUserName(user.email.split('@')[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        if (user.email) {
+          setUserName(user.email.split('@')[0]);
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [user]);
 
   const handleQuickAction = (action: string) => {
     switch (action) {

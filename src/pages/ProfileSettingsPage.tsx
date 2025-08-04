@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowLeft, User, Camera, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,24 +6,102 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const ProfileSettingsPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [profile, setProfile] = useState({
-    name: "Ethan Carter",
-    email: "ethan.carter@example.com",
-    phone: "+1 (555) 123-4567",
-    location: "San Francisco, CA"
+    name: "",
+    email: "",
+    phone: "",
+    location: ""
   });
+  const [loading, setLoading] = useState(true);
 
-  const handleSave = () => {
-    toast.success("Profile updated successfully");
-    navigate(-1);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error fetching profile:', error);
+          return;
+        }
+
+        if (data) {
+          setProfile({
+            name: data.full_name || '',
+            email: data.email || user.email || '',
+            phone: data.phone || '',
+            location: data.location || ''
+          });
+        } else {
+          // If no profile exists, set email from auth
+          setProfile(prev => ({
+            ...prev,
+            email: user.email || ''
+          }));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
+
+  const handleSave = async () => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({
+          id: user.id,
+          full_name: profile.name,
+          email: profile.email,
+          phone: profile.phone,
+          location: profile.location
+        });
+
+      if (error) {
+        toast.error("Error updating profile");
+        console.error('Error updating profile:', error);
+        return;
+      }
+
+      toast.success("Profile updated successfully");
+      navigate(-1);
+    } catch (error) {
+      toast.error("Error updating profile");
+      console.error('Error:', error);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
     setProfile(prev => ({ ...prev, [field]: value }));
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

@@ -1,12 +1,15 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Home, History, Settings, Moon, Sun } from "lucide-react";
+import { Home, History, Settings, Moon, Sun, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const [isDark, setIsDark] = useState(false);
+  const { signOut } = useAuth();
 
   useEffect(() => {
     const isDarkMode = localStorage.getItem('theme') === 'dark';
@@ -34,18 +37,31 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* Header */}
       <header className="bg-card border-b border-border p-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-foreground">Fraude Guard</h1>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleTheme}
-          className="h-9 w-9"
-        >
-          {isDark ? (
-            <Sun className="h-4 w-4" />
-          ) : (
-            <Moon className="h-4 w-4" />
-          )}
-        </Button>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="h-9 w-9"
+          >
+            {isDark ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={async () => {
+              await signOut();
+              toast.success("Logged out successfully");
+            }}
+            className="h-9 w-9"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
+        </div>
       </header>
 
       {/* Main Content */}
