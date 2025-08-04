@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
+import documentVault3D from "@/assets/document-vault-3d.png";
+import protectionScore3D from "@/assets/protection-score-3d.png";
+import scamNews3D from "@/assets/scam-news-3d.png";
 const Dashboard = () => {
   const navigate = useNavigate();
   const {
@@ -119,9 +122,9 @@ const Dashboard = () => {
       <div>
         <h2 className="text-lg font-semibold mb-4 text-foreground">Additional Features</h2>
         <div className="grid grid-cols-1 gap-3">
-          <QuickTile title="Document Vault" icon="🗃️" onClick={() => navigate("/document-vault")} className="animate-scale-in" />
-          <QuickTile title="Protection Score" icon="🛡️" onClick={() => navigate("/protection-score")} className="animate-scale-in" />
-          <QuickTile title="Scam News & Alerts" icon="📰" onClick={() => navigate("/scam-news")} className="animate-scale-in" />
+          <QuickTile title="Document Vault" icon={<img src={documentVault3D} alt="Document Vault" className="w-8 h-8" />} onClick={() => navigate("/document-vault")} className="animate-scale-in" />
+          <QuickTile title="Protection Score" icon={<img src={protectionScore3D} alt="Protection Score" className="w-8 h-8" />} onClick={() => navigate("/protection-score")} className="animate-scale-in" />
+          <QuickTile title="Scam News & Alerts" icon={<img src={scamNews3D} alt="Scam News" className="w-8 h-8" />} onClick={() => navigate("/scam-news")} className="animate-scale-in" />
         </div>
       </div>
 
