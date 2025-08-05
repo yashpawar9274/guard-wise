@@ -44,6 +44,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_activities: {
+        Row: {
+          activity_data: Json | null
+          activity_type: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          activity_data?: Json | null
+          activity_type: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          activity_data?: Json | null
+          activity_type?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_permissions: {
+        Row: {
+          granted: boolean
+          granted_at: string | null
+          id: string
+          permission_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          granted?: boolean
+          granted_at?: string | null
+          id?: string
+          permission_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          granted?: boolean
+          granted_at?: string | null
+          id?: string
+          permission_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
