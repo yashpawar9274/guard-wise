@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   User, 
   Shield, 
@@ -18,15 +18,34 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<any>(null);
   const [darkMode, setDarkMode] = useState(() => 
     localStorage.getItem('theme') === 'dark'
   );
   const [notifications, setNotifications] = useState(true);
   const [realTimeProtection, setRealTimeProtection] = useState(true);
   const [autoBlock, setAutoBlock] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (user) {
+        const { data } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .maybeSingle();
+        setProfile(data);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
 
   const toggleDarkMode = () => {
     const newTheme = !darkMode;
@@ -104,7 +123,9 @@ const SettingsPage = () => {
             <User className="h-12 w-12 text-primary" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">Ethan Carter</h2>
+            <h2 className="text-xl font-bold text-foreground">
+              {profile?.full_name || user?.email?.split('@')[0] || 'User'}
+            </h2>
             <p className="text-primary font-medium">Premium User</p>
           </div>
         </div>

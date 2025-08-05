@@ -1,11 +1,13 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Phone, MessageSquare, Link, Monitor } from "lucide-react";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { usePermissions } from "@/hooks/usePermissions";
 
 const PermissionsPage = () => {
   const navigate = useNavigate();
+  const { updatePermission, logActivity } = usePermissions();
   const [permissions, setPermissions] = useState({
     phone: false,
     messages: false,
@@ -13,8 +15,10 @@ const PermissionsPage = () => {
     apps: false,
   });
 
-  const handlePermissionChange = (permission: keyof typeof permissions, value: boolean) => {
+  const handlePermissionChange = async (permission: keyof typeof permissions, value: boolean) => {
     setPermissions(prev => ({ ...prev, [permission]: value }));
+    await updatePermission(permission, value);
+    await logActivity('permission_changed', { permission, granted: value });
   };
 
   const allPermissionsGranted = Object.values(permissions).every(Boolean);
