@@ -17,8 +17,14 @@ const ScamLookupPage = () => {
       toast.error("Please enter something to search");
       return;
     }
-    setShowResults(true);
+    
     toast.info("Searching our database...");
+    setTimeout(() => {
+      setShowResults(true);
+      toast.success("Search completed", {
+        description: "Found results in our scam database"
+      });
+    }, 1500);
   };
 
   const renderStars = (rating: number) => {

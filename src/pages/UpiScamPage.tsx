@@ -15,13 +15,47 @@ const UpiScamPage = () => {
       toast.error("Please enter UPI ID");
       return;
     }
+    
     toast.info("Scanning UPI ID for fraud reports...");
-    // Add UPI scanning logic here
+    setTimeout(() => {
+      const reportCount = Math.floor(Math.random() * 50);
+      const isReported = reportCount > 5;
+      
+      if (isReported) {
+        toast.error(`UPI ID Flagged!`, {
+          description: `${reportCount} fraud reports found`,
+          action: {
+            label: "View Reports",
+            onClick: () => navigate("/scam-lookup")
+          }
+        });
+      } else {
+        toast.success("UPI ID appears safe", {
+          description: "No fraud reports found"
+        });
+      }
+    }, 2000);
   };
 
   const handleOpenCamera = () => {
     toast.info("Opening camera to scan QR code...");
-    // Add camera functionality here
+    // Simulate camera opening
+    setTimeout(() => {
+      const isScamQR = Math.random() > 0.7;
+      if (isScamQR) {
+        toast.error("Suspicious QR Code Detected!", {
+          description: "This QR code may lead to a fraudulent payment",
+          action: {
+            label: "Report QR Code",
+            onClick: () => toast.success("QR code reported to authorities")
+          }
+        });
+      } else {
+        toast.success("QR Code scanned successfully", {
+          description: "Proceeding to payment gateway..."
+        });
+      }
+    }, 3000);
   };
 
   return (

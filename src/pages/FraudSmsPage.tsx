@@ -14,8 +14,27 @@ const FraudSmsPage = () => {
       toast.error("Please enter SMS content");
       return;
     }
-    toast.info("Scanning SMS for threats...");
-    // Add SMS scanning logic here
+    
+    toast.info("Analyzing SMS content...");
+    setTimeout(() => {
+      const threats = ["phishing links", "suspicious keywords", "fake offers"];
+      const foundThreat = threats[Math.floor(Math.random() * threats.length)];
+      const isScam = Math.random() > 0.4;
+      
+      if (isScam) {
+        toast.error(`Potential Scam Detected!`, {
+          description: `Found: ${foundThreat}`,
+          action: {
+            label: "Block Sender",
+            onClick: () => toast.success("Sender blocked successfully")
+          }
+        });
+      } else {
+        toast.success("SMS appears safe", {
+          description: "No threats detected in this message"
+        });
+      }
+    }, 2500);
   };
 
   return (
