@@ -21,7 +21,7 @@ const HistoryPage = () => {
       id: "1",
       type: "call",
       title: "Scam Call Blocked",
-      description: "+91-XXXX-XXX111 - Fake bank verification call",
+      description: "+91-9876543210 - Fake HDFC Bank verification call",
       timestamp: "2 hours ago",
       status: "blocked",
       severity: "high"
@@ -29,8 +29,8 @@ const HistoryPage = () => {
     {
       id: "2", 
       type: "sms",
-      title: "Suspicious SMS Detected",
-      description: "KYC verification link detected as phishing",
+      title: "Phishing SMS Detected",
+      description: "KYC verification link from fake SBI - bit.ly/fake-sbi-kyc",
       timestamp: "5 hours ago",
       status: "flagged",
       severity: "high"
@@ -38,27 +38,90 @@ const HistoryPage = () => {
     {
       id: "3",
       type: "link",
-      title: "Malicious Link Blocked",
-      description: "Fake UPI payment link intercepted",
+      title: "Malicious URL Blocked",
+      description: "Fake Paytm payment link - paytm-secure.netlify.app",
       timestamp: "1 day ago", 
       status: "blocked",
-      severity: "medium"
+      severity: "high"
     },
     {
       id: "4",
       type: "upi",
       title: "UPI Fraud Attempt",
-      description: "Suspicious transaction request blocked",
-      timestamp: "2 days ago",
+      description: "Suspicious QR code scan - merchant@fakestore",
+      timestamp: "1 day ago",
       status: "reported", 
       severity: "high"
     },
     {
       id: "5",
+      type: "call",
+      title: "Robocall Blocked",
+      description: "+91-8765432109 - Insurance policy sales call",
+      timestamp: "2 days ago",
+      status: "blocked",
+      severity: "medium"
+    },
+    {
+      id: "6",
+      type: "sms",
+      title: "Lottery Scam SMS",
+      description: "Congratulations! You won ₹5,00,000 lottery",
+      timestamp: "2 days ago",
+      status: "blocked",
+      severity: "medium"
+    },
+    {
+      id: "7",
       type: "malware",
       title: "Malicious App Removed",
-      description: "Fake banking app uninstalled",
+      description: "Fake PhonePe app - com.phonepay.secure",
       timestamp: "3 days ago",
+      status: "blocked",
+      severity: "high"
+    },
+    {
+      id: "8",
+      type: "link",
+      title: "Phishing Website Blocked",
+      description: "Fake Flipkart login - flipkart-offers.com",
+      timestamp: "3 days ago",
+      status: "blocked",
+      severity: "high"
+    },
+    {
+      id: "9",
+      type: "call",
+      title: "Telemarketing Call",
+      description: "+91-7654321098 - Credit card offer",
+      timestamp: "4 days ago",
+      status: "flagged",
+      severity: "low"
+    },
+    {
+      id: "10",
+      type: "sms",
+      title: "OTP Phishing SMS",
+      description: "Your OTP is 123456. Share to verify account",
+      timestamp: "5 days ago",
+      status: "blocked",
+      severity: "high"
+    },
+    {
+      id: "11",
+      type: "upi",
+      title: "Fake Payment Request",
+      description: "Unknown UPI ID: scammer123@paytm",
+      timestamp: "6 days ago",
+      status: "reported",
+      severity: "medium"
+    },
+    {
+      id: "12",
+      type: "link",
+      title: "Cryptocurrency Scam",
+      description: "Fake Bitcoin investment - crypto-profit.in",
+      timestamp: "1 week ago",
       status: "blocked",
       severity: "high"
     }
@@ -144,15 +207,15 @@ const HistoryPage = () => {
       {/* Stats Cards */}
       <div className="grid grid-cols-3 gap-3 mb-6">
         <Card className="p-3 text-center bg-gradient-success border-success/20">
-          <div className="text-lg font-bold text-success-foreground">24</div>
+          <div className="text-lg font-bold text-success-foreground">47</div>
           <div className="text-xs text-success-foreground/80">Threats Blocked</div>
         </Card>
         <Card className="p-3 text-center bg-gradient-to-br from-warning/10 to-warning/5 border-warning/20">
-          <div className="text-lg font-bold text-foreground">8</div>
+          <div className="text-lg font-bold text-foreground">12</div>
           <div className="text-xs text-muted-foreground">This Week</div>
         </Card>
         <Card className="p-3 text-center bg-gradient-card border-border">
-          <div className="text-lg font-bold text-foreground">156</div>
+          <div className="text-lg font-bold text-foreground">289</div>
           <div className="text-xs text-muted-foreground">All Time</div>
         </Card>
       </div>

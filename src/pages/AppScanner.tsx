@@ -12,6 +12,7 @@ interface AppInfo {
   type: "malicious" | "cloned" | "spyware" | "safe";
   description: string;
   icon: string;
+  packageName?: string;
 }
 
 const AppScanner = () => {
@@ -22,38 +23,99 @@ const AppScanner = () => {
   const mockApps: AppInfo[] = [
     {
       id: "1",
-      name: "Fake Banking App",
+      name: "Fake SBI Mobile",
       type: "malicious",
-      description: "Malicious App",
-      icon: "🏦"
+      description: "Malicious Banking App",
+      icon: "🏦",
+      packageName: "com.sbi.fake.mobile"
     },
     {
       id: "2", 
-      name: "Social Media App Clone",
+      name: "WhatsApp Clone",
       type: "cloned",
-      description: "Cloned App",
-      icon: "📱"
+      description: "Cloned Messaging App",
+      icon: "💬",
+      packageName: "com.whatsapp.fake"
     },
     {
       id: "3",
-      name: "Unknown App",
+      name: "Phone Cleaner Pro",
       type: "spyware", 
-      description: "Spyware",
-      icon: "📊"
+      description: "Contains Spyware",
+      icon: "🧹",
+      packageName: "com.cleaner.spyware"
     },
     {
       id: "4",
-      name: "Messaging App",
-      type: "safe",
-      description: "Safe App",
-      icon: "💬"
+      name: "Paytm Fake",
+      type: "malicious",
+      description: "Fake Payment App",
+      icon: "💳",
+      packageName: "com.paytm.clone"
     },
     {
       id: "5",
-      name: "Photo Editing App", 
+      name: "Instagram Clone", 
+      type: "cloned",
+      description: "Unofficial Instagram",
+      icon: "📸",
+      packageName: "com.instagram.unofficial"
+    },
+    {
+      id: "6",
+      name: "Data Monitor",
+      type: "spyware",
+      description: "Tracks Your Data",
+      icon: "📊",
+      packageName: "com.data.tracker"
+    },
+    {
+      id: "7",
+      name: "Google Pay",
       type: "safe",
-      description: "Safe App",
-      icon: "🖼️"
+      description: "Legitimate Payment App",
+      icon: "🎯",
+      packageName: "com.google.android.apps.nbu.paisa.user"
+    },
+    {
+      id: "8",
+      name: "WhatsApp Messenger",
+      type: "safe",
+      description: "Official Messaging App",
+      icon: "💬",
+      packageName: "com.whatsapp"
+    },
+    {
+      id: "9",
+      name: "Truecaller",
+      type: "safe",
+      description: "Caller ID & Spam Blocking",
+      icon: "📞",
+      packageName: "com.truecaller"
+    },
+    {
+      id: "10",
+      name: "PhonePe",
+      type: "safe",
+      description: "Official Payment App",
+      icon: "💜",
+      packageName: "com.phonepe.app"
+    },
+    {
+      id: "11",
+      name: "Fake PhonePe",
+      type: "malicious",
+      description: "Malicious Payment Clone",
+      icon: "⚠️",
+      packageName: "com.phonepe.secure"
+    },
+    {
+      id: "12",
+      name: "Battery Saver Pro",
+      type: "spyware",
+      description: "Hidden Data Collection",
+      icon: "🔋",
+      packageName: "com.battery.spyware"
     }
   ];
 
@@ -64,7 +126,8 @@ const AppScanner = () => {
     setTimeout(() => {
       setApps(mockApps);
       setIsScanning(false);
-      toast.success("Scan completed! Found security issues.");
+      const maliciousCount = mockApps.filter(app => app.type === "malicious" || app.type === "spyware" || app.type === "cloned").length;
+      toast.success(`Scan completed! Found ${maliciousCount} security issues.`);
     }, 3000);
   };
 
@@ -146,7 +209,7 @@ const AppScanner = () => {
         {/* Apps List */}
         {apps.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-foreground">Installed Apps</h2>
+            <h2 className="text-lg font-semibold text-foreground">Installed Apps ({apps.length} found)</h2>
             
             {apps.map((app) => (
               <Card 
@@ -167,6 +230,9 @@ const AppScanner = () => {
                         {app.description}
                       </Badge>
                     </div>
+                    {app.packageName && (
+                      <p className="text-xs text-muted-foreground font-mono">{app.packageName}</p>
+                    )}
                   </div>
                   
                   {/* Action Button */}
