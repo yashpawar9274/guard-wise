@@ -2,19 +2,12 @@ import { ArrowLeft, Shield, Heart, Globe, Users, Award, ExternalLink } from "luc
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-
 const AboutPage = () => {
   const navigate = useNavigate();
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
-        <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={() => navigate(-1)}
-        >
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
           <ArrowLeft className="h-6 w-6" />
         </Button>
         <h1 className="text-xl font-semibold text-foreground">About Fraude Guard</h1>
@@ -102,29 +95,17 @@ const AboutPage = () => {
 
         {/* Links */}
         <div className="space-y-3">
-          <Button 
-            variant="outline" 
-            className="w-full h-12 justify-between"
-            onClick={() => window.open('https://fraudeguard.com/privacy', '_blank')}
-          >
+          <Button variant="outline" className="w-full h-12 justify-between" onClick={() => window.open('https://fraudeguard.com/privacy', '_blank')}>
             Privacy Policy
             <ExternalLink className="h-4 w-4" />
           </Button>
           
-          <Button 
-            variant="outline" 
-            className="w-full h-12 justify-between"
-            onClick={() => window.open('https://fraudeguard.com/terms', '_blank')}
-          >
+          <Button variant="outline" className="w-full h-12 justify-between" onClick={() => window.open('https://fraudeguard.com/terms', '_blank')}>
             Terms of Service
             <ExternalLink className="h-4 w-4" />
           </Button>
           
-          <Button 
-            variant="outline" 
-            className="w-full h-12 justify-between"
-            onClick={() => window.open('https://fraudeguard.com/licenses', '_blank')}
-          >
+          <Button variant="outline" className="w-full h-12 justify-between" onClick={() => window.open('https://fraudeguard.com/licenses', '_blank')}>
             Open Source Licenses
             <ExternalLink className="h-4 w-4" />
           </Button>
@@ -132,13 +113,9 @@ const AboutPage = () => {
 
         {/* Copyright */}
         <div className="text-center pt-4 pb-8">
-          <p className="text-xs text-muted-foreground">
-            © 2024 Fraude Guard. All rights reserved.
-          </p>
+          <p className="text-xs text-muted-foreground">© 2026 Fraude Guard. All rights reserved.</p>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default AboutPage;
