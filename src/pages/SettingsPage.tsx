@@ -10,7 +10,8 @@ import {
   Moon,
   Sun,
   RotateCcw,
-  Heart
+  Heart,
+  LogOut
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -23,7 +24,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const [profile, setProfile] = useState<any>(null);
   const [darkMode, setDarkMode] = useState(() => 
     localStorage.getItem('theme') === 'dark'
@@ -74,6 +75,15 @@ const SettingsPage = () => {
     toast.success("Protection score reset successfully");
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast.success("Logged out successfully");
+      navigate("/auth");
+    } catch (e: any) {
+      toast.error(e?.message || "Logout failed");
+    }
+  };
   const SettingItem = ({ 
     icon, 
     title, 
@@ -196,6 +206,19 @@ const SettingsPage = () => {
               icon={<Info className="h-5 w-5" />}
               title="Terms"
               onClick={() => navigate("/terms")}
+            />
+          </Card>
+        </div>
+
+        {/* Account */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-foreground">Account</h3>
+          <Card className="bg-gradient-card border-border shadow-card">
+            <SettingItem
+              icon={<LogOut className="h-5 w-5" />}
+              title="Logout"
+              description="Sign out of your account"
+              onClick={handleLogout}
             />
           </Card>
         </div>
