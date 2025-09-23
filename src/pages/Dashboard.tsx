@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Shield, Search, Bot, Phone, MessageSquare, CreditCard, Link2, SearchCheck } from "lucide-react";
+import { Shield, Search, Bot, Phone, MessageSquare, CreditCard, Link2, SearchCheck, Newspaper } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ProtectionCard from "@/components/ProtectionCard";
@@ -138,14 +138,39 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* News & Alerts Section */}
+      <Card className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-full">
+              <Newspaper className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-sm text-foreground">📰 Latest Cyber News</h3>
+              <p className="text-xs text-muted-foreground mt-1">
+                Stay updated with latest scam alerts & safety tips
+              </p>
+            </div>
+          </div>
+          <Button 
+            variant="default" 
+            size="sm"
+            onClick={() => navigate("/scam-news")}
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            View News
+          </Button>
+        </div>
+      </Card>
+
       {/* Fraud Alert Ticker */}
       <Card className="p-4 bg-gradient-to-r from-warning/10 to-destructive/10 border-warning/20">
         <div className="flex items-center space-x-2">
           <div className="w-2 h-2 bg-destructive rounded-full animate-pulse"></div>
           <div className="flex-1">
-            <h3 className="font-semibold text-sm text-foreground">📰 Fraud Alert Ticker</h3>
+            <h3 className="font-semibold text-sm text-foreground">🚨 Live Alert Ticker</h3>
             <p className="text-xs text-muted-foreground mt-1">
-              Live: New scam call blocked in your area. Stay vigilant!
+              New UPI QR code scam detected in Mumbai. Verify before scanning!
             </p>
           </div>
         </div>
