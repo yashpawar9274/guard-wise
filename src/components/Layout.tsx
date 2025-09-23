@@ -46,9 +46,7 @@ const Layout = ({
       <header className="bg-card border-b border-border p-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-foreground">Fraude Guard</h1>
         <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9">
-            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </Button>
+          
           
         </div>
       </header>
