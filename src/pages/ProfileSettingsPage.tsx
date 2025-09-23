@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-
 const ProfileSettingsPage = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const {
+    user
+  } = useAuth();
   const [profile, setProfile] = useState({
     name: "",
     email: "",
@@ -19,23 +20,18 @@ const ProfileSettingsPage = () => {
     location: ""
   });
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) return;
-      
       try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
-
+        const {
+          data,
+          error
+        } = await supabase.from('profiles').select('*').eq('id', user.id).single();
         if (error && error.code !== 'PGRST116') {
           console.error('Error fetching profile:', error);
           return;
         }
-
         if (data) {
           setProfile({
             name: data.full_name || '',
@@ -56,30 +52,25 @@ const ProfileSettingsPage = () => {
         setLoading(false);
       }
     };
-
     fetchProfile();
   }, [user]);
-
   const handleSave = async () => {
     if (!user) return;
-
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .upsert({
-          id: user.id,
-          full_name: profile.name,
-          email: profile.email,
-          phone: profile.phone,
-          location: profile.location
-        });
-
+      const {
+        error
+      } = await supabase.from('profiles').upsert({
+        id: user.id,
+        full_name: profile.name,
+        email: profile.email,
+        phone: profile.phone,
+        location: profile.location
+      });
       if (error) {
         toast.error("Error updating profile");
         console.error('Error updating profile:', error);
         return;
       }
-
       toast.success("Profile updated successfully");
       navigate(-1);
     } catch (error) {
@@ -87,38 +78,28 @@ const ProfileSettingsPage = () => {
       console.error('Error:', error);
     }
   };
-
   const handleInputChange = (field: string, value: string) => {
-    setProfile(prev => ({ ...prev, [field]: value }));
+    setProfile(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
-
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+    return <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-muted-foreground">Loading profile...</p>
         </div>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border">
-        <Button 
-          variant="ghost" 
-          size="icon"
-          onClick={() => navigate(-1)}
-        >
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
           <ArrowLeft className="h-6 w-6" />
         </Button>
         <h1 className="text-xl font-semibold text-foreground">Profile Settings</h1>
-        <Button 
-          onClick={handleSave}
-          className="text-primary bg-transparent hover:bg-primary/10"
-        >
+        <Button onClick={handleSave} className="text-primary bg-transparent hover:bg-primary/10">
           Save
         </Button>
       </div>
@@ -133,11 +114,7 @@ const ProfileSettingsPage = () => {
                 {profile.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
-            <Button 
-              size="icon" 
-              className="absolute -bottom-2 -right-2 rounded-full w-8 h-8"
-              onClick={() => toast.info("Camera functionality coming soon")}
-            >
+            <Button size="icon" className="absolute -bottom-2 -right-2 rounded-full w-8 h-8" onClick={() => toast.info("Camera functionality coming soon")}>
               <Camera className="h-4 w-4" />
             </Button>
           </div>
@@ -153,11 +130,7 @@ const ProfileSettingsPage = () => {
               <User className="h-4 w-4 mr-2" />
               Full Name
             </label>
-            <Input
-              value={profile.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
-              className="bg-background border-border"
-            />
+            <Input value={profile.name} onChange={e => handleInputChange('name', e.target.value)} className="bg-background border-border" />
           </div>
 
           <div className="space-y-2">
@@ -165,12 +138,7 @@ const ProfileSettingsPage = () => {
               <Mail className="h-4 w-4 mr-2" />
               Email Address
             </label>
-            <Input
-              type="email"
-              value={profile.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className="bg-background border-border"
-            />
+            <Input type="email" value={profile.email} onChange={e => handleInputChange('email', e.target.value)} className="bg-background border-border" />
           </div>
 
           <div className="space-y-2">
@@ -178,12 +146,7 @@ const ProfileSettingsPage = () => {
               <Phone className="h-4 w-4 mr-2" />
               Phone Number
             </label>
-            <Input
-              type="tel"
-              value={profile.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              className="bg-background border-border"
-            />
+            <Input type="tel" value={profile.phone} onChange={e => handleInputChange('phone', e.target.value)} className="bg-background border-border" />
           </div>
 
           <div className="space-y-2">
@@ -191,11 +154,7 @@ const ProfileSettingsPage = () => {
               <MapPin className="h-4 w-4 mr-2" />
               Location
             </label>
-            <Input
-              value={profile.location}
-              onChange={(e) => handleInputChange('location', e.target.value)}
-              className="bg-background border-border"
-            />
+            <Input value={profile.location} onChange={e => handleInputChange('location', e.target.value)} className="bg-background border-border" />
           </div>
         </Card>
 
@@ -203,17 +162,13 @@ const ProfileSettingsPage = () => {
         <Card className="p-4 bg-gradient-to-r from-primary/10 to-primary/20 border-primary/20">
           <div className="text-center space-y-2">
             <h3 className="font-semibold text-foreground">Premium Subscription</h3>
-            <p className="text-sm text-muted-foreground">
-              Your premium subscription is active until Dec 2024
-            </p>
+            <p className="text-sm text-muted-foreground">Your premium subscription is active until Dec 2026</p>
             <Button variant="outline" className="border-primary text-primary hover:bg-primary/10">
               Manage Subscription
             </Button>
           </div>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ProfileSettingsPage;
