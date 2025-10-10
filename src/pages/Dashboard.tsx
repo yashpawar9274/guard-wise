@@ -65,8 +65,7 @@ const Dashboard = () => {
     }
   };
   const handleFullScan = () => {
-    toast.info("Starting full phone scan...");
-    // Navigate to scan page
+    navigate("/phone-scan");
   };
   const quickTiles = [{
     title: "Scam Calls",
