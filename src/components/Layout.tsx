@@ -44,7 +44,7 @@ const Layout = ({
   return <div className="min-h-screen bg-background flex flex-col max-w-md mx-auto relative">
       {/* Header */}
       <header className="bg-card border-b border-border p-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-foreground">Fraude Guard</h1>
+        <h1 className="text-xl font-bold text-foreground">Fraud Guard</h1>
         <div className="flex items-center space-x-2">
           
           
