@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Shield, AlertTriangle, CheckCircle, Smartphone, FileText, MessageSquare, Phone, Link2, Package } from "lucide-react";
+import { ArrowLeft, Shield, AlertTriangle, CheckCircle, Smartphone, FileText, MessageSquare, Phone, Link2, Package, Trash2, Ban, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface ScanItem {
   name: string;
@@ -18,6 +19,7 @@ const PhoneScanPage = () => {
   const [scanProgress, setScanProgress] = useState(0);
   const [isScanning, setIsScanning] = useState(true);
   const [currentScan, setCurrentScan] = useState("");
+  const [showFixSection, setShowFixSection] = useState(false);
   const [scanItems, setScanItems] = useState<ScanItem[]>([
     { name: "Installed Apps", icon: <Package className="w-5 h-5" />, status: "scanning" },
     { name: "SMS Messages", icon: <MessageSquare className="w-5 h-5" />, status: "scanning" },
@@ -119,6 +121,34 @@ const PhoneScanPage = () => {
 
   const threatCount = scanItems.filter(item => item.status === "danger" || item.status === "warning").length;
 
+  const handleDeleteSMS = () => {
+    toast.success("2 suspicious SMS messages deleted successfully");
+    setScanItems(prev => prev.map(item => 
+      item.name === "SMS Messages" 
+        ? { ...item, status: "safe", details: "All messages are safe" }
+        : item
+    ));
+    setShowFixSection(false);
+  };
+
+  const handleBlockNumber = () => {
+    toast.success("Scam number +91-9876543210 blocked successfully");
+    setScanItems(prev => prev.map(item => 
+      item.name === "Call History" 
+        ? { ...item, status: "safe", details: "No threats in call history" }
+        : item
+    ));
+    setShowFixSection(false);
+  };
+
+  const handleViewDetails = (itemName: string) => {
+    if (itemName === "SMS Messages") {
+      navigate("/fraud-sms");
+    } else if (itemName === "Call History") {
+      navigate("/scam-calls");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background p-4 space-y-6">
       {/* Header */}
@@ -210,11 +240,113 @@ const PhoneScanPage = () => {
             ))}
           </div>
 
+          {/* Fix Issues Section */}
+          {showFixSection && threatCount > 0 && (
+            <Card className="p-6 space-y-4 bg-gradient-to-br from-destructive/5 to-warning/5 border-destructive/20">
+              <div className="flex items-center space-x-2">
+                <Shield className="w-6 h-6 text-primary" />
+                <h3 className="text-lg font-bold text-foreground">Fix Issues</h3>
+              </div>
+
+              {scanItems.find(item => item.name === "SMS Messages" && item.status === "warning") && (
+                <div className="space-y-3 p-4 bg-background rounded-lg border border-warning/20">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground flex items-center space-x-2">
+                        <MessageSquare className="w-4 h-4 text-warning" />
+                        <span>Suspicious SMS Messages</span>
+                      </h4>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Found 2 messages with potential phishing links
+                      </p>
+                      <div className="mt-2 text-xs text-muted-foreground space-y-1">
+                        <p>• "Congratulations! You won ₹50,000. Click here..."</p>
+                        <p>• "Your account will be blocked. Verify now..."</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="destructive" 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={handleDeleteSMS}
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete Messages
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleViewDetails("SMS Messages")}
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      View
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {scanItems.find(item => item.name === "Call History" && item.status === "danger") && (
+                <div className="space-y-3 p-4 bg-background rounded-lg border border-destructive/20">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground flex items-center space-x-2">
+                        <Phone className="w-4 h-4 text-destructive" />
+                        <span>Known Scam Number</span>
+                      </h4>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Number reported 847 times for fraud
+                      </p>
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        <p className="font-medium">+91-9876543210</p>
+                        <p className="text-warning">• Fake bank representative scam</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="destructive" 
+                      size="sm" 
+                      className="flex-1"
+                      onClick={handleBlockNumber}
+                    >
+                      <Ban className="w-4 h-4 mr-2" />
+                      Block Number
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleViewDetails("Call History")}
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      View
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </Card>
+          )}
+
           {/* Actions */}
           <div className="space-y-3">
-            {threatCount > 0 && (
-              <Button className="w-full bg-gradient-primary hover:opacity-90" size="lg">
+            {threatCount > 0 && !showFixSection && (
+              <Button 
+                className="w-full bg-gradient-primary hover:opacity-90" 
+                size="lg"
+                onClick={() => setShowFixSection(true)}
+              >
                 Fix Issues Now
+              </Button>
+            )}
+            {threatCount > 0 && showFixSection && (
+              <Button 
+                variant="outline"
+                className="w-full" 
+                size="lg"
+                onClick={() => setShowFixSection(false)}
+              >
+                Hide Fix Options
               </Button>
             )}
             <Button 
