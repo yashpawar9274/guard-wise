@@ -341,15 +341,15 @@ This is an academic project. For contributions:
 MIT License - Free for educational and commercial use
 
 ## 👥 Team
-- Developer: [Your Name]
-- Institution: [Your Institution]
+- Developer: Yash Pawar
+- Institution: none
 - Year: 2025
 - Project Type: Academic/Hackathon
 
 ## 📞 Support & Contact
-- Email: [Your Email]
-- GitHub: [Your GitHub]
-- Project Demo: [Demo Link]
+- Email: yash92pawar74@gmail.com
+- GitHub: Ashking92 / yashpawar9274
+- Project Demo: 
 
 ## 🎯 Project Goals Achieved
 ✅ Real-time scam detection  
