@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Home, History, Settings, Moon, Sun, LogOut } from "lucide-react";
+import { Home, History, Settings, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
@@ -32,6 +32,10 @@ const Layout = ({
     path: "/",
     icon: Home,
     label: "Home"
+  }, {
+    path: "/report-scam",
+    icon: AlertTriangle,
+    label: "Report"
   }, {
     path: "/history",
     icon: History,

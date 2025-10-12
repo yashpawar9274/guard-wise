@@ -32,6 +32,7 @@ import DocumentVaultPage from "./pages/DocumentVaultPage";
 import ProtectionScorePage from "./pages/ProtectionScorePage";
 import ScamNewsPage from "./pages/ScamNewsPage";
 import PhoneScanPage from "./pages/PhoneScanPage";
+import ReportScamPage from "./pages/ReportScamPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -162,6 +163,10 @@ const AppRoutes = () => {
       <Route 
         path="/phone-scan" 
         element={user ? <Layout><PhoneScanPage /></Layout> : <Navigate to="/" replace />} 
+      />
+      <Route 
+        path="/report-scam" 
+        element={user ? <Layout><ReportScamPage /></Layout> : <Navigate to="/" replace />} 
       />
       <Route path="*" element={<NotFound />} />
     </Routes>
